@@ -14,7 +14,7 @@ class Cliente(models.Model):
         db_table = 'Clientes' # Asegura que el nombre de la tabla en la BD sea 'Clientes'
 
     def __str__(self):
-        return self.nombre_cliente
+        return self.NombreCliente
 
 # Modelo para Proveedor
 class Proveedor(models.Model):
@@ -64,7 +64,7 @@ class Pedido(models.Model):
         db_table = 'Pedidos' # Asegura que el nombre de la tabla en la BD sea 'Pedidos'
 
     def __str__(self):
-        return f"Pedido {self.id} - {self.cliente.nombre_cliente}"
+        return f"Pedido {self.id} - {self.cliente.NombreCliente}"
 
 # Modelo para Factura
 class Factura(models.Model):
@@ -91,7 +91,7 @@ class FacturaDetalle(models.Model):
                                db_column='Num_Factura', verbose_name="Número de Factura")
     # Relación uno a muchos con Producto
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE,
-                                 db_column='Codigo_Producto', verbose_name="Producto")
+                                 db_column='Codigo_Producto', verbose_name="Productos")
     cantidad = models.IntegerField(verbose_name="Cantidad")
     precio_unitario = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Precio Unitario")
 
