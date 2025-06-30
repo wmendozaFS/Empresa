@@ -5,7 +5,7 @@ from django.db import models
 # Modelo para Clientes
 class Cliente(models.Model):
     # ID se crea automáticamente como clave primaria autoincremental por defecto.
-    nombre_cliente = models.CharField(max_length=50, verbose_name="Nombre Cliente")
+    NombreCliente = models.CharField(max_length=50, verbose_name="Nombre Cliente")
     celular = models.CharField(max_length=80, verbose_name="Número Celular")
 
     class Meta:
@@ -25,7 +25,7 @@ class Proveedor(models.Model):
     class Meta:
         verbose_name = "Proveedor"
         verbose_name_plural = "Proveedores"
-        db_table = 'Proveedor' # Asegura que el nombre de la tabla en la BD sea 'Proveedor'
+        db_table = 'Proveedores' # Asegura que el nombre de la tabla en la BD sea 'Proveedor'
 
     def __str__(self):
         return self.razon_social

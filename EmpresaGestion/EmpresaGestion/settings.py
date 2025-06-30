@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 Para ver la lista completa de configuraciones y sus valores predeterminados, consulte
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 
 # Construye rutas dentro del proyecto como: BASE_DIR / 'subdir'.
@@ -18,12 +18,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuración de seguridad
 # ¡ADVERTENCIA DE SEGURIDAD: mantenga la clave secreta utilizada en producción en secreto!
-SECRET_KEY = 'django-insecure-your-secret-key-here-please-change-this' # ¡Cambia esta clave en producción!
+SECRET_KEY = config('SECRET_KEY')
 
 # ¡ADVERTENCIA DE SEGURIDAD: no ejecute con DEBUG = True en producción!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=list)
 
 
 # Definición de aplicaciones
