@@ -1,4 +1,4 @@
-f# gestion_empresa/models.py
+# gestion_empresa/models.py
 
 from django.db import models
 

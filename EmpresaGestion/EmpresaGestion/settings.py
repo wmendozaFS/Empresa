@@ -10,7 +10,6 @@ Para ver la lista completa de configuraciones y sus valores predeterminados, con
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-import os
 from pathlib import Path
 
 # Construye rutas dentro del proyecto como: BASE_DIR / 'subdir'.
@@ -74,16 +73,13 @@ WSGI_APPLICATION = 'EmpresaGestion.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Opciones: 'sqlite3', 'postgresql', 'mysql', 'oracle'
-        'NAME': 'Empresa',                    # Nombre de tu base de datos
-        'USER': 'root',                       # Tu usuario de base de datos
-        'PASSWORD': 'your_mysql_password',    # Tu contraseña de base de datos (¡Cámbiala!)
-        'HOST': 'localhost',                  # O la IP de tu servidor de base de datos
-        'PORT': '3306',                       # Puerto de MySQL
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        }
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": config('DB_NAME'),
+        "USER": config('DB_USER'),
+        "PASSWORD": config('DB_PASSWORD'),
+        "HOST": config('DB_HOST'),
+        "PORT": config('DB_PORT')
     }
 }
 
