@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 from decouple import config
 from pathlib import Path
+from django.conf.global_settings import INTERNAL_IPS
 
 # Construye rutas dentro del proyecto como: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',  # Añade Django REST Framework
     'gestion_empresa', # Añade tu aplicación
+    'tailwind',  # Añade Tailwind CSS
+    'django_browser_reload',  # Añade Django Browser Reload para recarga automática
+    'theme',  # Nombre de la aplicación de Tailwind CSS
 ]
 
 MIDDLEWARE = [
@@ -53,7 +57,7 @@ ROOT_URLCONF = 'EmpresaGestion.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,16 +76,24 @@ WSGI_APPLICATION = 'EmpresaGestion.wsgi.application'
 # Base de datos
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": config('DB_NAME'),
-        "USER": config('DB_USER'),
-        "PASSWORD": config('DB_PASSWORD'),
-        "HOST": config('DB_HOST'),
-        "PORT": config('DB_PORT')
+if config('DB_ENGINE', default='mysql') == 'mysql': # Verifica el motor de la base de datos
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": config('DB_NAME'),
+            "USER": config('DB_USER'),
+            "PASSWORD": config('DB_PASSWORD'),
+            "HOST": config('DB_HOST'),
+            "PORT": config('DB_PORT')
+        }
     }
-}
+elif config('DB_ENGINE', default='mysql') == 'sqlite':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',  # Base de datos SQLite en el directorio del proyecto
+        }
+    }
 
 
 # Validadores de contraseña
@@ -118,12 +130,25 @@ USE_TZ = True
 # Archivos estáticos (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'  # Directorio para archivos subidos por el
 
 # Tipo de campo de clave primaria predeterminado
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TAILWIND_APP_NAME = 'theme'  # Nombre de la aplicación de Tailwind CSS
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "localhost",
+]
+#npm
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  # Ruta al ejecutable de npm, ajusta según tu instalación
 
 # Configuración de Django REST Framework
 REST_FRAMEWORK = {

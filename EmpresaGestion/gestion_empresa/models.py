@@ -33,6 +33,7 @@ class Proveedor(models.Model):
 # Modelo para Productos
 class Producto(models.Model):
     # Codigo se crea automáticamente como clave primaria autoincremental por defecto.
+    codigo = models.AutoField(primary_key=True)
     descripcion = models.CharField(max_length=50, verbose_name="Descripción")
     precio = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Precio")
     # Relación uno a muchos con Proveedor
@@ -45,11 +46,12 @@ class Producto(models.Model):
         db_table = 'Productos' # Asegura que el nombre de la tabla en la BD sea 'Productos'
 
     def __str__(self):
-        return self.descripcion
+        return f"Producto :{self.codigo} - {self.descripcion}"
 
 # Modelo para Pedidos
 class Pedido(models.Model):
     # id_pedido se crea automáticamente como clave primaria autoincremental por defecto.
+    id_pedido = models.AutoField(primary_key=True, verbose_name="ID del Pedido")
     # Relación uno a muchos con Producto
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE,
                                   db_column='Codigo', verbose_name="Producto")
@@ -78,7 +80,7 @@ class Factura(models.Model):
     class Meta:
         verbose_name = "Factura"
         verbose_name_plural = "Facturas"
-        db_table = 'Factura' # Asegura que el nombre de la tabla en la BD sea 'Factura'
+        db_table = 'Facturas' # Asegura que el nombre de la tabla en la BD sea 'Factura'
 
     def __str__(self):
         return f"Factura {self.num}"
@@ -98,7 +100,7 @@ class FacturaDetalle(models.Model):
     class Meta:
         verbose_name = "Detalle de Factura"
         verbose_name_plural = "Detalles de Factura"
-        db_table = 'Factura_Detalle' # Asegura que el nombre de la tabla en la BD sea 'Factura_Detalle'
+        db_table = 'Facturas_Detalle' # Asegura que el nombre de la tabla en la BD sea 'Factura_Detalle'
         # Añade una restricción de unicidad para evitar duplicados en el detalle de una factura
         unique_together = ('factura', 'producto')
 
