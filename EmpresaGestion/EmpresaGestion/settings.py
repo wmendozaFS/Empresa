@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'tailwind',  # Añade Tailwind CSS
     'django_browser_reload',  # Añade Django Browser Reload para recarga automática
     'theme',  # Nombre de la aplicación de Tailwind CSS
+    'users',  # Añade tu aplicación de usuarios
 ]
 
 MIDDLEWARE = [
